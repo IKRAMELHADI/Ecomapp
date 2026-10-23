@@ -1,0 +1,42 @@
+
+flowchart TB
+    UI["Interface AquaSave - 5 onglets"]
+    GW["API Gateway - JWT, routage, rate limiting"]
+
+    UI --> GW
+
+    GW -->|REST /v1| ORD["Orders Service"]
+    GW -->|REST /v1| INV["Inventory Service"]
+    GW -->|REST /v1| PAY["Payments Service"]
+    GW -->|GraphQL| CAT["Catalog Service"]
+
+    ORD -->|Consulter un produit| CAT
+    ORD -->|Reserver ou liberer le stock| INV
+    ORD -->|Demander un paiement| PAY
+
+    subgraph DB["Stockage operationnel"]
+        PG1[("PostgreSQL - orders")]
+        PG2[("PostgreSQL - inventory")]
+        PG3[("PostgreSQL - payments")]
+        MDB[("MongoDB - catalog")]
+    end
+
+    ORD --> PG1
+    INV --> PG2
+    PAY --> PG3
+    CAT --> MDB
+
+    ORD -.->|Evenements commandes| K["Kafka"]
+    INV -.->|Evenements stock| K
+    PAY -.->|Evenements paiement| K
+
+    K --> SP["Spark Structured Streaming"]
+    SP --> DL["MinIO / Lakehouse - raw, staging, curated, consumption"]
+
+    GW -.-> OBS["Prometheus - Grafana - OpenTelemetry - Logs"]
+    ORD -.-> OBS
+    INV -.-> OBS
+    PAY -.-> OBS
+    CAT -.-> OBS
+    SP -.-> OBS
+
