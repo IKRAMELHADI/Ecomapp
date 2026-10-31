@@ -1,4 +1,18 @@
 .env
 .env.*
-database/postgres/backups/
+
+# Olist raw dataset
+data/raw/olist/
+
+# Generated datasets
 data/generated/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Python virtual environments
+.venv/
+venv/
+# PostgreSQL backups
+database/postgres/backups/
