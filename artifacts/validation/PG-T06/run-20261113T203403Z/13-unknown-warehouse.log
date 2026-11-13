@@ -1,0 +1,15 @@
+Commande: docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < SQL
+INSERT INTO inventory.stock VALUES (104,999999,10,0);
+Attendu: Rejet FK 23503 fk_stock_warehouse
+Code: 3
+Statut: OK
+Nature: rejet attendu
+STDOUT:
+
+STDERR:
+ERROR:  23503: insert or update on table "stock" violates foreign key constraint "fk_stock_warehouse"
+DETAIL:  Key (warehouse_id)=(999999) is not present in table "warehouses".
+SCHEMA NAME:  inventory
+TABLE NAME:  stock
+CONSTRAINT NAME:  fk_stock_warehouse
+LOCATION:  ri_ReportViolation, ri_triggers.c:2608

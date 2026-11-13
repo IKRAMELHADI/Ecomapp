@@ -1,0 +1,9 @@
+Commande: docker run -d --name validation-pg-t06-a26c4fb21f --label purpose=validation-pg-t06 --mount type=tmpfs,destination=/var/lib/postgresql/data,tmpfs-size=536870912 -p 127.0.0.1::5432 -e POSTGRES_DB=aquasave -e POSTGRES_USER=aquasave -e POSTGRES_PASSWORD -e POSTGRES_INITDB_ARGS=--auth-host=scram-sha-256 postgres:16 -c log_statement=none -c log_min_error_statement=panic (POSTGRES_PASSWORD généré en mémoire)
+Attendu: Nouveau conteneur PostgreSQL 16, port localhost attribué par Docker, stockage tmpfs distinct
+Code: 0
+Statut: OK
+Nature: vérification
+STDOUT:
+c09ee5a273550bf5dd99ce75edd1ba9c77fc9decb3fe8f1eceb7a79f0b0fd9e3
+
+STDERR:

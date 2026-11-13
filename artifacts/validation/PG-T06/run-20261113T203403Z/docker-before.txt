@@ -1,0 +1,21 @@
+a69c2f332c2d|kafka-2|apache/kafka:3.7.0|Up 33 hours|0.0.0.0:9096->9094/tcp, [::]:9096->9094/tcp
+6f599508ca0d|kafka-1|apache/kafka:3.7.0|Up 35 hours|0.0.0.0:9095->9094/tcp, [::]:9095->9094/tcp
+35e92c6431cc|kafka-0|apache/kafka:3.7.0|Up 33 hours|0.0.0.0:9094->9094/tcp, [::]:9094->9094/tcp
+8a636b1ed8c7|09-11-26-kafka-ui-1|provectuslabs/kafka-ui:latest|Exited (255) 35 hours ago|0.0.0.0:8080->8080/tcp
+6cf0a54ce44c|kafka|apache/kafka:3.9.0|Exited (255) 35 hours ago|0.0.0.0:9092->9092/tcp
+91c40073014b|plateforme-data-control-plane|kindest/node:v1.37.0|Up 35 hours|127.0.0.1:61878->6443/tcp
+b5cdc183b00f|aquasave-postgres|postgres:16|Up 35 hours (healthy)|0.0.0.0:5433->5432/tcp, [::]:5433->5432/tcp
+aebe06a03554|aquasave-mongo|mongo:8.0|Up 35 hours|0.0.0.0:27018->27017/tcp, [::]:27018->27017/tcp
+fdb8f5fa95c3|mongos|mongo:8.0|Exited (137) 3 weeks ago|
+3a8336c7e067|shard3a|mongo:8.0|Exited (0) 3 weeks ago|
+b1835e6a0f87|shard1a|mongo:8.0|Exited (0) 3 weeks ago|
+243b73006f31|shard2a|mongo:8.0|Exited (0) 3 weeks ago|
+8cc14d6a127f|configsvr1|mongo:8.0|Exited (0) 3 weeks ago|
+3bd8bba7eebb|mongo-seul|mongo:8.0|Exited (0) 3 weeks ago|
+70832e9b0307|neo4j|neo4j:5.26-community|Exited (137) 3 weeks ago|
+57acf98c665b|elasticsearch|elasticsearch:9.5.5|Exited (143) 3 weeks ago|
+b66a7f490f3f|cassandra|cassandra:5.0|Exited (137) 3 weeks ago|
+3bffcc202e58|redis|redis:8|Exited (0) 3 weeks ago|
+df1e822d20d1|condescending_mclean|gvenzl/oracle-free:23-slim|Exited (1) 3 weeks ago|
+8159789f37ec|mysql-bdd|mysql:8.4|Exited (137) 3 weeks ago|
+005c4bc25e84|oracle-bdd|gvenzl/oracle-free:23-slim|Up 35 hours (healthy)|0.0.0.0:1521->1521/tcp, [::]:1521->1521/tcp

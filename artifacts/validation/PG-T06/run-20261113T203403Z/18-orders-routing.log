@@ -1,0 +1,15 @@
+Commande: docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < SQL
+INSERT INTO orders.customers(id,name,email) VALUES (1,'PG-T06 client','pg-t06@example.invalid');
+INSERT INTO orders.orders(id,customer_id,total_cents,created_at) VALUES (202601,1,1000,'2026-06-15 12:00:00+00'),(201801,1,1000,'2018-06-15 12:00:00+00');
+SELECT id,tableoid::regclass FROM orders.orders ORDER BY id;
+Attendu: 201801|orders.orders_default et 202601|orders.orders_2026_06
+Code: 0
+Statut: OK
+Nature: vérification
+STDOUT:
+INSERT 0 1
+INSERT 0 2
+201801|orders.orders_default
+202601|orders.orders_2026_06
+
+STDERR:

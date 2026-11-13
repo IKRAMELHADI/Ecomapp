@@ -1,0 +1,13 @@
+Commande: psql -X -h 127.0.0.1 -p 62418 -U inventory_service -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < SQL (PGPASSWORD en mémoire)
+SELECT * FROM payments.payments;
+Attendu: Rejet privilèges 42501 permission denied for schema payments
+Code: 3
+Statut: OK
+Nature: rejet attendu
+STDOUT:
+
+STDERR:
+ERROR:  42501: permission denied for schema payments
+LINE 1: SELECT * FROM payments.payments;
+                      ^
+LOCATION:  aclcheck_error, aclchk.c:2812

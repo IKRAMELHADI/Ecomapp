@@ -1,0 +1,9 @@
+Commande: docker inspect validation-pg-t06-a26c4fb21f --format '{{json .Mounts}}|{{json .NetworkSettings.Ports}}'
+Attendu: Stockage tmpfs et port lié uniquement à 127.0.0.1
+Code: 0
+Statut: OK
+Nature: vérification
+STDOUT:
+[{"Type":"tmpfs","Source":"","Destination":"/var/lib/postgresql/data","Mode":"","RW":true,"Propagation":""}]|{"5432/tcp":[{"HostIp":"127.0.0.1","HostPort":"62418"}]}
+
+STDERR:

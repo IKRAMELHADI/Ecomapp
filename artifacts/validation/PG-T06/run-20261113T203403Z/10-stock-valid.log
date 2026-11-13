@@ -1,0 +1,14 @@
+Commande: docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < SQL
+INSERT INTO inventory.warehouses(id,name,capacity_units) VALUES (1,'PG-T06 test',100);
+INSERT INTO inventory.stock(product_id,warehouse_id,quantity,reserved_quantity) VALUES (101,1,10,2);
+SELECT product_id,warehouse_id,quantity,reserved_quantity FROM inventory.stock;
+Attendu: Entrepôt et stock acceptés : 101|1|10|2
+Code: 0
+Statut: OK
+Nature: vérification
+STDOUT:
+INSERT 0 1
+INSERT 0 1
+101|1|10|2
+
+STDERR:

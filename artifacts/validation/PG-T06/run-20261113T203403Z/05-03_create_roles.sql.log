@@ -1,0 +1,31 @@
+Commande: docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < database/postgres/03_create_roles.sql
+Attendu: Code 0, script intégral appliqué sans modification avant toute donnée métier
+Code: 0
+Statut: OK
+Nature: vérification
+STDOUT:
+DO
+GRANT
+REVOKE
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+
+STDERR:

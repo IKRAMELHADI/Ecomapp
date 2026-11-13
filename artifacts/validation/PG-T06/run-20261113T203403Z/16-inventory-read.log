@@ -1,0 +1,12 @@
+Commande: psql -X -h 127.0.0.1 -p 62418 -U inventory_service -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < SQL (PGPASSWORD en mémoire)
+SELECT current_user, current_database();
+SELECT product_id,warehouse_id,quantity,reserved_quantity FROM inventory.stock ORDER BY product_id;
+Attendu: Connexion TCP réelle inventory_service ; stock lisible 101|1|10|2
+Code: 0
+Statut: OK
+Nature: vérification
+STDOUT:
+inventory_service|aquasave
+101|1|10|2
+
+STDERR:

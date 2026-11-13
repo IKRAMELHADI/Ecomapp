@@ -1,0 +1,10 @@
+Commande: docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < SQL
+SELECT current_database(), current_user, pg_get_userbyid(datdba), current_setting('server_version') FROM pg_database WHERE datname=current_database();
+Attendu: aquasave|aquasave|aquasave|16.x
+Code: 0
+Statut: OK
+Nature: vérification
+STDOUT:
+aquasave|aquasave|aquasave|16.14 (Debian 16.14-1.pgdg13+1)
+
+STDERR:

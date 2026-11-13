@@ -1,0 +1,14 @@
+Commande: SHA256 avant/après : Compose, .env, scripts 00/03/05 (aucun contenu .env journalisé)
+Attendu: Tous les fichiers protégés inchangés
+Code: 0
+Statut: OK
+Nature: vérification
+STDOUT:
+{
+  "docker-compose.yml": true,
+  ".env": true,
+  "database/postgres/00_schema_snapshot.sql": true,
+  "database/postgres/03_create_roles.sql": true,
+  "database/postgres/05_partitioning.sql": true
+}
+STDERR:

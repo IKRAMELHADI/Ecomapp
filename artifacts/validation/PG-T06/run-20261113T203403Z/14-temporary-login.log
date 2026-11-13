@@ -1,0 +1,9 @@
+Commande: ALTER ROLE inventory_service PASSWORD <secret temporaire généré en mémoire>;
+Attendu: Mot de passe temporaire installé sans journalisation du secret
+Code: 0
+Statut: OK
+Nature: vérification
+STDOUT:
+ALTER ROLE
+
+STDERR:

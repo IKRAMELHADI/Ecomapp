@@ -1,0 +1,20 @@
+Commande: docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < database/postgres/05_partitioning.sql
+Attendu: Code 0, script intégral appliqué sans modification avant toute donnée métier
+Code: 0
+Statut: OK
+Nature: vérification
+STDOUT:
+BEGIN
+DO
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+DO
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+COMMIT
+
+STDERR:

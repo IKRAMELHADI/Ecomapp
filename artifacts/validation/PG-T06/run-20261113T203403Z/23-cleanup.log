@@ -1,0 +1,9 @@
+Commande: docker rm -f validation-pg-t06-a26c4fb21f
+Attendu: Seul le conteneur de test supprimé ; stockage tmpfs libéré
+Code: 0
+Statut: OK
+Nature: vérification
+STDOUT:
+validation-pg-t06-a26c4fb21f
+
+STDERR:

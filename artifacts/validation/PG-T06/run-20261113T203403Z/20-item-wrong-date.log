@@ -1,0 +1,15 @@
+Commande: docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < SQL
+INSERT INTO orders.order_items(order_id,order_created_at,product_id,quantity,unit_price_cents) VALUES (202601,'2026-06-16 12:00:00+00',101,1,1000);
+Attendu: Rejet FK composite 23503 fk_order_items_order
+Code: 3
+Statut: OK
+Nature: rejet attendu
+STDOUT:
+
+STDERR:
+ERROR:  23503: insert or update on table "order_items" violates foreign key constraint "fk_order_items_order"
+DETAIL:  Key (order_id, order_created_at)=(202601, 2026-06-16 12:00:00+00) is not present in table "orders".
+SCHEMA NAME:  orders
+TABLE NAME:  order_items
+CONSTRAINT NAME:  fk_order_items_order
+LOCATION:  ri_ReportViolation, ri_triggers.c:2608

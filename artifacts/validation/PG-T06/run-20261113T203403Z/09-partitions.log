@@ -1,0 +1,10 @@
+Commande: docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < SQL
+SELECT count(*), count(*) FILTER (WHERE pg_get_expr(c.relpartbound,c.oid)='DEFAULT') FROM pg_inherits i JOIN pg_class c ON c.oid=i.inhrelid WHERE i.inhparent='orders.orders'::regclass;
+Attendu: 25 partitions dont une DEFAULT (24 mois 2026-2027)
+Code: 0
+Statut: OK
+Nature: vérification
+STDOUT:
+25|1
+
+STDERR:

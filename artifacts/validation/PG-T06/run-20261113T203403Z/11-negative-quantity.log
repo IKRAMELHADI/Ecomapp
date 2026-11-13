@@ -1,0 +1,15 @@
+Commande: docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < SQL
+INSERT INTO inventory.stock VALUES (102,1,-1,-1);
+Attendu: Rejet CHECK 23514 stock_quantity_check
+Code: 3
+Statut: OK
+Nature: rejet attendu
+STDOUT:
+
+STDERR:
+ERROR:  23514: new row for relation "stock" violates check constraint "stock_quantity_check"
+DETAIL:  Failing row contains (102, 1, -1, -1).
+SCHEMA NAME:  inventory
+TABLE NAME:  stock
+CONSTRAINT NAME:  stock_quantity_check
+LOCATION:  ExecConstraints, execMain.c:2109

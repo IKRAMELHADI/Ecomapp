@@ -1,0 +1,19 @@
+Commande: docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < SQL
+SELECT n.nspname || '.' || c.relname FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname IN ('auth','inventory','orders','payments') AND c.relkind IN ('r','p') AND NOT c.relispartition ORDER BY 1;
+Attendu: Exactement dix tables métier hors partitions
+Code: 0
+Statut: OK
+Nature: vérification
+STDOUT:
+auth.roles
+auth.user_roles
+auth.users
+inventory.stock
+inventory.stock_reservations
+inventory.warehouses
+orders.customers
+orders.order_items
+orders.orders
+payments.payments
+
+STDERR:

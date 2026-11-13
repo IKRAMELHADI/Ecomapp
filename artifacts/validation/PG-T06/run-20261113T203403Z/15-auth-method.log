@@ -1,0 +1,14 @@
+Commande: docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < SQL
+SELECT type,auth_method FROM pg_hba_file_rules WHERE type='host' ORDER BY rule_number;
+Attendu: Toutes les règles TCP utilisent scram-sha-256
+Code: 0
+Statut: OK
+Nature: vérification
+STDOUT:
+host|scram-sha-256
+host|scram-sha-256
+host|scram-sha-256
+host|scram-sha-256
+host|scram-sha-256
+
+STDERR:

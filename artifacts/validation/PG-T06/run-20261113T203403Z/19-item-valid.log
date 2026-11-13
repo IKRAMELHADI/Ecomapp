@@ -1,0 +1,12 @@
+Commande: docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < SQL
+INSERT INTO orders.order_items(order_id,order_created_at,product_id,quantity,unit_price_cents) VALUES (202601,'2026-06-15 12:00:00+00',101,1,1000);
+SELECT order_id,order_created_at,quantity FROM orders.order_items;
+Attendu: Article accepté pour le couple (202601, 2026-06-15 12:00:00+00)
+Code: 0
+Statut: OK
+Nature: vérification
+STDOUT:
+INSERT 0 1
+202601|2026-06-15 12:00:00+00|1
+
+STDERR:

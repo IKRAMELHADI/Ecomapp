@@ -1,0 +1,13 @@
+Commande: docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < SQL
+SELECT nspname FROM pg_namespace WHERE nspname IN ('auth','inventory','orders','payments') ORDER BY 1;
+Attendu: Exactement quatre schémas métier
+Code: 0
+Statut: OK
+Nature: vérification
+STDOUT:
+auth
+inventory
+orders
+payments
+
+STDERR:

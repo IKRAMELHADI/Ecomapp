@@ -1,0 +1,9 @@
+Commande: ALTER ROLE inventory_service NOLOGIN PASSWORD NULL;
+Attendu: Identifiants temporaires révoqués
+Code: 0
+Statut: OK
+Nature: vérification
+STDOUT:
+ALTER ROLE
+
+STDERR:

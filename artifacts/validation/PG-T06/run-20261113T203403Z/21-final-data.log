@@ -1,0 +1,10 @@
+Commande: docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < SQL
+SELECT (SELECT count(*) FROM inventory.warehouses),(SELECT count(*) FROM inventory.stock),(SELECT count(*) FROM orders.orders),(SELECT count(*) FROM orders.order_items);
+Attendu: 1|1|2|1 : aucune insertion invalide persistée
+Code: 0
+Statut: OK
+Nature: vérification
+STDOUT:
+1|1|2|1
+
+STDERR:

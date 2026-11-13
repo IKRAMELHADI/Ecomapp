@@ -1,0 +1,266 @@
+{
+  "metadata": {
+    "started_utc": "2026-11-13T20:34:03.279749+00:00",
+    "container": "validation-pg-t06-a26c4fb21f",
+    "storage": "tmpfs /var/lib/postgresql/data: no project volume or bind mount",
+    "hashes_before": {
+      "docker-compose.yml": "f8fb9e5f075ebdf1069dd19df5228bd12b3779812d70f358fff854f5f7b5595b",
+      ".env": "d68189641707d176919b9109dc39384251c1c06e2d89f6a16fd6aa2450d87e17",
+      "database/postgres/00_schema_snapshot.sql": "c1d65a43d621cfb47cce7c5bd133dd5b4ad2d9ccf0ca9377e6d37e2549d0afab",
+      "database/postgres/03_create_roles.sql": "120d2dbd77f8f66921071a78c4261ce4848ece6bac08b17cb987946ef1802e6a",
+      "database/postgres/05_partitioning.sql": "fb557d715ab62428fb3f42ce7b3ddca29d86147a908b272c2a0c02031ed52eba"
+    },
+    "image": "sha256:fe03a7605299a34ddf5e4f285dff78c3d7190a576b3c6b46f2fcff69f4bffd54|[\"postgres@sha256:fe03a7605299a34ddf5e4f285dff78c3d7190a576b3c6b46f2fcff69f4bffd54\"]",
+    "port": 62418,
+    "hashes_after": {
+      "docker-compose.yml": "f8fb9e5f075ebdf1069dd19df5228bd12b3779812d70f358fff854f5f7b5595b",
+      ".env": "d68189641707d176919b9109dc39384251c1c06e2d89f6a16fd6aa2450d87e17",
+      "database/postgres/00_schema_snapshot.sql": "c1d65a43d621cfb47cce7c5bd133dd5b4ad2d9ccf0ca9377e6d37e2549d0afab",
+      "database/postgres/03_create_roles.sql": "120d2dbd77f8f66921071a78c4261ce4848ece6bac08b17cb987946ef1802e6a",
+      "database/postgres/05_partitioning.sql": "fb557d715ab62428fb3f42ce7b3ddca29d86147a908b272c2a0c02031ed52eba"
+    },
+    "finished_utc": "2026-11-13T20:34:10.206577+00:00"
+  },
+  "checks": [
+    {
+      "id": "01-instance",
+      "commande": "docker run -d --name validation-pg-t06-a26c4fb21f --label purpose=validation-pg-t06 --mount type=tmpfs,destination=/var/lib/postgresql/data,tmpfs-size=536870912 -p 127.0.0.1::5432 -e POSTGRES_DB=aquasave -e POSTGRES_USER=aquasave -e POSTGRES_PASSWORD -e POSTGRES_INITDB_ARGS=--auth-host=scram-sha-256 postgres:16 -c log_statement=none -c log_min_error_statement=panic (POSTGRES_PASSWORD généré en mémoire)",
+      "attendu": "Nouveau conteneur PostgreSQL 16, port localhost attribué par Docker, stockage tmpfs distinct",
+      "code_retour": 0,
+      "observe": "c09ee5a273550bf5dd99ce75edd1ba9c77fc9decb3fe8f1eceb7a79f0b0fd9e3\n",
+      "erreur": "",
+      "statut": "OK",
+      "nature": "vérification"
+    },
+    {
+      "id": "02-isolation",
+      "commande": "docker inspect validation-pg-t06-a26c4fb21f --format '{{json .Mounts}}|{{json .NetworkSettings.Ports}}'",
+      "attendu": "Stockage tmpfs et port lié uniquement à 127.0.0.1",
+      "code_retour": 0,
+      "observe": "[{\"Type\":\"tmpfs\",\"Source\":\"\",\"Destination\":\"/var/lib/postgresql/data\",\"Mode\":\"\",\"RW\":true,\"Propagation\":\"\"}]|{\"5432/tcp\":[{\"HostIp\":\"127.0.0.1\",\"HostPort\":\"62418\"}]}\n",
+      "erreur": "",
+      "statut": "OK",
+      "nature": "vérification"
+    },
+    {
+      "id": "03-version-owner",
+      "commande": "docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < SQL\nSELECT current_database(), current_user, pg_get_userbyid(datdba), current_setting('server_version') FROM pg_database WHERE datname=current_database();",
+      "attendu": "aquasave|aquasave|aquasave|16.x",
+      "code_retour": 0,
+      "observe": "aquasave|aquasave|aquasave|16.14 (Debian 16.14-1.pgdg13+1)\n",
+      "erreur": "",
+      "statut": "OK",
+      "nature": "vérification"
+    },
+    {
+      "id": "04-00_schema_snapshot.sql",
+      "commande": "docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < database/postgres/00_schema_snapshot.sql",
+      "attendu": "Code 0, script intégral appliqué sans modification avant toute donnée métier",
+      "code_retour": 0,
+      "observe": "SET\nSET\nSET\nSET\nSET\n\nSET\nSET\nSET\nSET\nCREATE SCHEMA\nCREATE SCHEMA\nCREATE SCHEMA\nCREATE SCHEMA\nSET\nSET\nCREATE TABLE\nCREATE SEQUENCE\nALTER SEQUENCE\nCREATE TABLE\nCREATE TABLE\nCREATE SEQUENCE\nALTER SEQUENCE\nCREATE TABLE\nCREATE TABLE\nCREATE TABLE\nCREATE SEQUENCE\nALTER SEQUENCE\nCREATE TABLE\nCREATE SEQUENCE\nALTER SEQUENCE\nCREATE TABLE\nCREATE SEQUENCE\nALTER SEQUENCE\nCREATE TABLE\nCREATE SEQUENCE\nALTER SEQUENCE\nCREATE TABLE\nCREATE SEQUENCE\nALTER SEQUENCE\nALTER TABLE\nALTER TABLE\nALTER TABLE\nALTER TABLE\nALTER TABLE\nALTER TABLE\nALTER TABLE\nALTER TABLE\nALTER TABLE\nALTER TABLE\nALTER TABLE\nALTER TABLE\nALTER TABLE\nALTER TABLE\nALTER TABLE\nALTER TABLE\nALTER TABLE\nALTER TABLE\nALTER TABLE\nALTER TABLE\nALTER TABLE\nALTER TABLE\nALTER TABLE\nCREATE INDEX\nCREATE INDEX\nCREATE INDEX\nCREATE INDEX\nCREATE INDEX\nCREATE INDEX\nCREATE INDEX\nALTER TABLE\nALTER TABLE\nALTER TABLE\nALTER TABLE\nALTER TABLE\nALTER TABLE\n",
+      "erreur": "",
+      "statut": "OK",
+      "nature": "vérification"
+    },
+    {
+      "id": "05-03_create_roles.sql",
+      "commande": "docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < database/postgres/03_create_roles.sql",
+      "attendu": "Code 0, script intégral appliqué sans modification avant toute donnée métier",
+      "code_retour": 0,
+      "observe": "DO\nGRANT\nREVOKE\nGRANT\nGRANT\nGRANT\nGRANT\nGRANT\nGRANT\nGRANT\nGRANT\nGRANT\nGRANT\nGRANT\nGRANT\nALTER DEFAULT PRIVILEGES\nALTER DEFAULT PRIVILEGES\nALTER DEFAULT PRIVILEGES\nALTER DEFAULT PRIVILEGES\nALTER DEFAULT PRIVILEGES\nALTER DEFAULT PRIVILEGES\nALTER DEFAULT PRIVILEGES\nALTER DEFAULT PRIVILEGES\n",
+      "erreur": "",
+      "statut": "OK",
+      "nature": "vérification"
+    },
+    {
+      "id": "06-05_partitioning.sql",
+      "commande": "docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < database/postgres/05_partitioning.sql",
+      "attendu": "Code 0, script intégral appliqué sans modification avant toute donnée métier",
+      "code_retour": 0,
+      "observe": "BEGIN\nDO\nDROP TABLE\nDROP TABLE\nCREATE TABLE\nDO\nCREATE TABLE\nCREATE TABLE\nCREATE INDEX\nCREATE INDEX\nCREATE INDEX\nCOMMIT\n",
+      "erreur": "",
+      "statut": "OK",
+      "nature": "vérification"
+    },
+    {
+      "id": "07-schemas",
+      "commande": "docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < SQL\nSELECT nspname FROM pg_namespace WHERE nspname IN ('auth','inventory','orders','payments') ORDER BY 1;",
+      "attendu": "Exactement quatre schémas métier",
+      "code_retour": 0,
+      "observe": "auth\ninventory\norders\npayments\n",
+      "erreur": "",
+      "statut": "OK",
+      "nature": "vérification"
+    },
+    {
+      "id": "08-tables",
+      "commande": "docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < SQL\nSELECT n.nspname || '.' || c.relname FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname IN ('auth','inventory','orders','payments') AND c.relkind IN ('r','p') AND NOT c.relispartition ORDER BY 1;",
+      "attendu": "Exactement dix tables métier hors partitions",
+      "code_retour": 0,
+      "observe": "auth.roles\nauth.user_roles\nauth.users\ninventory.stock\ninventory.stock_reservations\ninventory.warehouses\norders.customers\norders.order_items\norders.orders\npayments.payments\n",
+      "erreur": "",
+      "statut": "OK",
+      "nature": "vérification"
+    },
+    {
+      "id": "09-partitions",
+      "commande": "docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < SQL\nSELECT count(*), count(*) FILTER (WHERE pg_get_expr(c.relpartbound,c.oid)='DEFAULT') FROM pg_inherits i JOIN pg_class c ON c.oid=i.inhrelid WHERE i.inhparent='orders.orders'::regclass;",
+      "attendu": "25 partitions dont une DEFAULT (24 mois 2026-2027)",
+      "code_retour": 0,
+      "observe": "25|1\n",
+      "erreur": "",
+      "statut": "OK",
+      "nature": "vérification"
+    },
+    {
+      "id": "10-stock-valid",
+      "commande": "docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < SQL\nINSERT INTO inventory.warehouses(id,name,capacity_units) VALUES (1,'PG-T06 test',100);\nINSERT INTO inventory.stock(product_id,warehouse_id,quantity,reserved_quantity) VALUES (101,1,10,2);\nSELECT product_id,warehouse_id,quantity,reserved_quantity FROM inventory.stock;",
+      "attendu": "Entrepôt et stock acceptés : 101|1|10|2",
+      "code_retour": 0,
+      "observe": "INSERT 0 1\nINSERT 0 1\n101|1|10|2\n",
+      "erreur": "",
+      "statut": "OK",
+      "nature": "vérification"
+    },
+    {
+      "id": "11-negative-quantity",
+      "commande": "docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < SQL\nINSERT INTO inventory.stock VALUES (102,1,-1,-1);",
+      "attendu": "Rejet CHECK 23514 stock_quantity_check",
+      "code_retour": 3,
+      "observe": "",
+      "erreur": "ERROR:  23514: new row for relation \"stock\" violates check constraint \"stock_quantity_check\"\nDETAIL:  Failing row contains (102, 1, -1, -1).\nSCHEMA NAME:  inventory\nTABLE NAME:  stock\nCONSTRAINT NAME:  stock_quantity_check\nLOCATION:  ExecConstraints, execMain.c:2109\n",
+      "statut": "OK",
+      "nature": "rejet attendu"
+    },
+    {
+      "id": "12-reserved-too-high",
+      "commande": "docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < SQL\nINSERT INTO inventory.stock VALUES (103,1,10,11);",
+      "attendu": "Rejet CHECK 23514 chk_reserved_quantity",
+      "code_retour": 3,
+      "observe": "",
+      "erreur": "ERROR:  23514: new row for relation \"stock\" violates check constraint \"chk_reserved_quantity\"\nDETAIL:  Failing row contains (103, 1, 10, 11).\nSCHEMA NAME:  inventory\nTABLE NAME:  stock\nCONSTRAINT NAME:  chk_reserved_quantity\nLOCATION:  ExecConstraints, execMain.c:2109\n",
+      "statut": "OK",
+      "nature": "rejet attendu"
+    },
+    {
+      "id": "13-unknown-warehouse",
+      "commande": "docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < SQL\nINSERT INTO inventory.stock VALUES (104,999999,10,0);",
+      "attendu": "Rejet FK 23503 fk_stock_warehouse",
+      "code_retour": 3,
+      "observe": "",
+      "erreur": "ERROR:  23503: insert or update on table \"stock\" violates foreign key constraint \"fk_stock_warehouse\"\nDETAIL:  Key (warehouse_id)=(999999) is not present in table \"warehouses\".\nSCHEMA NAME:  inventory\nTABLE NAME:  stock\nCONSTRAINT NAME:  fk_stock_warehouse\nLOCATION:  ri_ReportViolation, ri_triggers.c:2608\n",
+      "statut": "OK",
+      "nature": "rejet attendu"
+    },
+    {
+      "id": "14-temporary-login",
+      "commande": "ALTER ROLE inventory_service PASSWORD <secret temporaire généré en mémoire>;",
+      "attendu": "Mot de passe temporaire installé sans journalisation du secret",
+      "code_retour": 0,
+      "observe": "ALTER ROLE\n",
+      "erreur": "",
+      "statut": "OK",
+      "nature": "vérification"
+    },
+    {
+      "id": "15-auth-method",
+      "commande": "docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < SQL\nSELECT type,auth_method FROM pg_hba_file_rules WHERE type='host' ORDER BY rule_number;",
+      "attendu": "Toutes les règles TCP utilisent scram-sha-256",
+      "code_retour": 0,
+      "observe": "host|scram-sha-256\nhost|scram-sha-256\nhost|scram-sha-256\nhost|scram-sha-256\nhost|scram-sha-256\n",
+      "erreur": "",
+      "statut": "OK",
+      "nature": "vérification"
+    },
+    {
+      "id": "16-inventory-read",
+      "commande": "psql -X -h 127.0.0.1 -p 62418 -U inventory_service -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < SQL (PGPASSWORD en mémoire)\nSELECT current_user, current_database();\nSELECT product_id,warehouse_id,quantity,reserved_quantity FROM inventory.stock ORDER BY product_id;",
+      "attendu": "Connexion TCP réelle inventory_service ; stock lisible 101|1|10|2",
+      "code_retour": 0,
+      "observe": "inventory_service|aquasave\n101|1|10|2\n",
+      "erreur": "",
+      "statut": "OK",
+      "nature": "vérification"
+    },
+    {
+      "id": "17-payments-denied",
+      "commande": "psql -X -h 127.0.0.1 -p 62418 -U inventory_service -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < SQL (PGPASSWORD en mémoire)\nSELECT * FROM payments.payments;",
+      "attendu": "Rejet privilèges 42501 permission denied for schema payments",
+      "code_retour": 3,
+      "observe": "",
+      "erreur": "ERROR:  42501: permission denied for schema payments\nLINE 1: SELECT * FROM payments.payments;\n                      ^\nLOCATION:  aclcheck_error, aclchk.c:2812\n",
+      "statut": "OK",
+      "nature": "rejet attendu"
+    },
+    {
+      "id": "18-orders-routing",
+      "commande": "docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < SQL\nINSERT INTO orders.customers(id,name,email) VALUES (1,'PG-T06 client','pg-t06@example.invalid');\nINSERT INTO orders.orders(id,customer_id,total_cents,created_at) VALUES (202601,1,1000,'2026-06-15 12:00:00+00'),(201801,1,1000,'2018-06-15 12:00:00+00');\nSELECT id,tableoid::regclass FROM orders.orders ORDER BY id;",
+      "attendu": "201801|orders.orders_default et 202601|orders.orders_2026_06",
+      "code_retour": 0,
+      "observe": "INSERT 0 1\nINSERT 0 2\n201801|orders.orders_default\n202601|orders.orders_2026_06\n",
+      "erreur": "",
+      "statut": "OK",
+      "nature": "vérification"
+    },
+    {
+      "id": "19-item-valid",
+      "commande": "docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < SQL\nINSERT INTO orders.order_items(order_id,order_created_at,product_id,quantity,unit_price_cents) VALUES (202601,'2026-06-15 12:00:00+00',101,1,1000);\nSELECT order_id,order_created_at,quantity FROM orders.order_items;",
+      "attendu": "Article accepté pour le couple (202601, 2026-06-15 12:00:00+00)",
+      "code_retour": 0,
+      "observe": "INSERT 0 1\n202601|2026-06-15 12:00:00+00|1\n",
+      "erreur": "",
+      "statut": "OK",
+      "nature": "vérification"
+    },
+    {
+      "id": "20-item-wrong-date",
+      "commande": "docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < SQL\nINSERT INTO orders.order_items(order_id,order_created_at,product_id,quantity,unit_price_cents) VALUES (202601,'2026-06-16 12:00:00+00',101,1,1000);",
+      "attendu": "Rejet FK composite 23503 fk_order_items_order",
+      "code_retour": 3,
+      "observe": "",
+      "erreur": "ERROR:  23503: insert or update on table \"order_items\" violates foreign key constraint \"fk_order_items_order\"\nDETAIL:  Key (order_id, order_created_at)=(202601, 2026-06-16 12:00:00+00) is not present in table \"orders\".\nSCHEMA NAME:  orders\nTABLE NAME:  order_items\nCONSTRAINT NAME:  fk_order_items_order\nLOCATION:  ri_ReportViolation, ri_triggers.c:2608\n",
+      "statut": "OK",
+      "nature": "rejet attendu"
+    },
+    {
+      "id": "21-final-data",
+      "commande": "docker exec -i validation-pg-t06-a26c4fb21f psql -X -U aquasave -d aquasave -v ON_ERROR_STOP=1 -v VERBOSITY=verbose -A -t < SQL\nSELECT (SELECT count(*) FROM inventory.warehouses),(SELECT count(*) FROM inventory.stock),(SELECT count(*) FROM orders.orders),(SELECT count(*) FROM orders.order_items);",
+      "attendu": "1|1|2|1 : aucune insertion invalide persistée",
+      "code_retour": 0,
+      "observe": "1|1|2|1\n",
+      "erreur": "",
+      "statut": "OK",
+      "nature": "vérification"
+    },
+    {
+      "id": "22-revoke-test-login",
+      "commande": "ALTER ROLE inventory_service NOLOGIN PASSWORD NULL;",
+      "attendu": "Identifiants temporaires révoqués",
+      "code_retour": 0,
+      "observe": "ALTER ROLE\n",
+      "erreur": "",
+      "statut": "OK",
+      "nature": "vérification"
+    },
+    {
+      "id": "23-cleanup",
+      "commande": "docker rm -f validation-pg-t06-a26c4fb21f",
+      "attendu": "Seul le conteneur de test supprimé ; stockage tmpfs libéré",
+      "code_retour": 0,
+      "observe": "validation-pg-t06-a26c4fb21f\n",
+      "erreur": "",
+      "statut": "OK",
+      "nature": "vérification"
+    },
+    {
+      "id": "24-source-integrity",
+      "commande": "SHA256 avant/après : Compose, .env, scripts 00/03/05 (aucun contenu .env journalisé)",
+      "attendu": "Tous les fichiers protégés inchangés",
+      "code_retour": 0,
+      "observe": "{\n  \"docker-compose.yml\": true,\n  \".env\": true,\n  \"database/postgres/00_schema_snapshot.sql\": true,\n  \"database/postgres/03_create_roles.sql\": true,\n  \"database/postgres/05_partitioning.sql\": true\n}",
+      "erreur": "",
+      "statut": "OK",
+      "nature": "vérification"
+    }
+  ]
+}
